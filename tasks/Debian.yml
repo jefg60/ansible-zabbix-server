@@ -42,6 +42,8 @@
     url: http://repo.zabbix.com/zabbix-official-repo.key
   register: zabbix_server_repo_files_installed
   until: zabbix_server_repo_files_installed is succeeded
+  retries: 10
+  delay: 3
   when:
     - zabbix_repo == "zabbix"
   become: yes
@@ -78,6 +80,8 @@
     install_recommends: "{{ zabbix_server_install_recommends }}"
   register: zabbix_server_package_installed
   until: zabbix_server_package_installed is succeeded
+  retries: 10
+  delay: 3
   tags:
     - zabbix-server
     - init
@@ -88,6 +92,8 @@
     state: present
   register: zabbix_server_dependencies_installed
   until: zabbix_server_dependencies_installed is succeeded
+  retries: 10
+  delay: 3
   when:
     - zabbix_database_creation
   tags:
@@ -102,6 +108,8 @@
     state: present
   register: zabbix_server_dependencies_installed
   until: zabbix_server_dependencies_installed is succeeded
+  retries: 10
+  delay: 3
   when:
     - zabbix_server_database == 'mysql'
     - zabbix_server_install_database_client
@@ -116,6 +124,8 @@
     state: present
   register: zabbix_server_dependencies_installed
   until: zabbix_server_dependencies_installed is succeeded
+  retries: 10
+  delay: 3
   when:
     - zabbix_server_database == 'pgsql'
     - zabbix_server_install_database_client
