@@ -31,6 +31,11 @@
     - init
     - config
 
+- name: Wait for apt dependency lock
+  shell: while fuser /var/lib/dpkg/lock >/dev/null ; do sleep $[ ( $RANDOM % 10 )  + 1 ]s; done
+  args:
+    executable: /bin/bash
+
 - name: "Debian | Install gpg key"
   apt_key:
     id: "{{ sign_keys[zabbix_short_version][ansible_distribution_release]['sign_key'] }}"
